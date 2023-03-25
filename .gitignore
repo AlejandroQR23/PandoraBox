@@ -1,0 +1,7 @@
+# ignore python env files
+/env
+/__pycache__
+/.vscode
+
+# ignore .env files
+.env
