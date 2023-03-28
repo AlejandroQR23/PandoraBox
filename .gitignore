@@ -2,6 +2,7 @@
 /env
 /__pycache__
 /.vscode
+/*/__pycache__
 
 # ignore .env files
 .env
