@@ -1,9 +1,10 @@
 from time import sleep
 
 from modules.Bot import Bot
+from modules.Buzzer import Alarm
 from modules.Keypad import Keypad
 from modules.LCD import DisplayLCD
-from modules.RGBLED import RGBLED
+from modules.RGBLED import LED
 from modules.UltrasonicSensor import UltrasonicSensor
 
 CODE = '1234'
@@ -21,7 +22,8 @@ class PandoraBox:
 
         # Inicializar los modulos de la caja
         self.distance_sensor = UltrasonicSensor()
-        self.led = RGBLED()
+        self.led = LED()
+        self.alarm = Alarm()
         # self.keypad = Keypad()
         # self.lcd = DisplayLCD()
 
@@ -34,13 +36,13 @@ class PandoraBox:
                 print("La caja esta abierta")
                 self.bot.send_message('La caja esta abierta')
                 self.trials = 0
-                self.led.off()
+                self.led.blink(time=(2, 2), color=LED.GREEN, n=1)
                 break
             else:
                 # self.lcd.write('Codigo incorrecto')
                 print("Codigo incorrecto")
                 self.trials += 1
-            self.led.set_brightness(self.trials / MAX_TRIALS)
+            self.led.set_warning(self.trials / MAX_TRIALS)
 
     def stop(self):
         # self.lcd.close()
@@ -76,11 +78,12 @@ class PandoraBox:
                     # self.lcd.write('Se agotaron los intentos')
                     print("Se agotaron los intentos")
                     self.bot.send_message('Alguien intentó abrir la caja')
-                    self.led.set_brightness(1)
+                    self.led.blink(time=(0.5, 0.5), color=LED.RED)
+                    self.alarm.beep(time=0.5)
+                    self.trials = 0
 
         except KeyboardInterrupt:
             self.stop()
 
 # TODO: reemplazar prints en consola por prints en LCD
 # TODO: reemplazar input por lectura de teclado
-# TODO: reemplazar led rojo por led RGB
