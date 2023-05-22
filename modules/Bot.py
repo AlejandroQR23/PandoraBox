@@ -18,7 +18,17 @@ class Bot:
 
     def start(self, message: Message) -> None:
         self.chat_id = message.chat.id
-        self.bot.send_message(message.chat.id, 'Hola, soy PandoraBot')
+        self.username = message.chat.username
+
+        self.bot.send_message(
+            message.chat.id, 'Hola, soy PandoraBot. Ingresa una nueva contraseña con /set_password')
+
+    def set_password(self, message: Message) -> None:
+        params = message.text.split(' ')
+        if len(params) != 2:
+            self.bot.send_message(message.chat.id, 'Comando invalido')
+            return
+        self.password = params[1]
 
     def show_help(self, message: Message) -> None:
         self.bot.send_message(message.chat.id, 'Ayuda')
@@ -37,6 +47,7 @@ class Bot:
         # definir los comandos
         self.bot.message_handler(commands=['start'])(self.start)
         self.bot.message_handler(commands=['help'])(self.show_help)
+        self.bot.message_handler(commands=['set_password'])(self.set_password)
 
         # manejar los comandos desconocidos
         self.bot.message_handler()(self.handle_unknown)
