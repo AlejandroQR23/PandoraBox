@@ -5,16 +5,12 @@ from supabase.client import create_client
 class DB:
 
     def __init__(self) -> None:
-        db_url = os.environ.get('DB_URL')
-        db_key = os.getenv('DB_KEY')
-
-        print(db_url, db_key)
         self.client = create_client(
             'https://jgeaqfizttebfqrstplw.supabase.co',
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnZWFxZml6dHRlYmZxcnN0cGx3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM1MDQ0NDcsImV4cCI6MTk5OTA4MDQ0N30.qyU-nZq4B8Ty8EKWA9MZgrqPNADgB142GFCjl5BFFAQ'
         )
 
-    def register_box(self, user: dict, box: dict) -> None:
+    def register_box(self, user: dict, box: dict) -> dict | None:
         """
         Registra una caja en la base de datos y la asocia con un usuario.
 
@@ -31,7 +27,7 @@ class DB:
                 user_id=user['id']
             )
         else:
-            raise Exception('La caja ya ha sido registrada')
+            return existing_box
 
     def set_password(self, box_id, password) -> None:
         """
@@ -70,5 +66,3 @@ class DB:
             'id': user_id,
             'username': username
         }).execute()
-
-# TODO: pasar las llaves de la bd a archivo .env
