@@ -34,7 +34,7 @@ class Keypad():
         for pin in self.cols:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-    def __get_key(self) -> str:
+    def get_key(self) -> str:
         """
         Lee una tecla del keypad y regresa su valor.
         """
@@ -57,7 +57,7 @@ class Keypad():
         """
         pin = ''
         while len(pin) < length:
-            key = self.__get_key()
+            key = self.get_key()
             if key:
                 pin += key
             sleep(0.2)
