@@ -10,7 +10,7 @@ class DB:
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnZWFxZml6dHRlYmZxcnN0cGx3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM1MDQ0NDcsImV4cCI6MTk5OTA4MDQ0N30.qyU-nZq4B8Ty8EKWA9MZgrqPNADgB142GFCjl5BFFAQ'
         )
 
-    def register_box(self, user: dict, box: dict) -> dict | None:
+    def register_box(self, user: dict, box: dict) -> dict:
         """
         Registra una caja en la base de datos y la asocia con un usuario.
 
@@ -40,7 +40,7 @@ class DB:
             'password': password
         }).eq('id', box_id).execute()
 
-    def __get_box(self, box_id) -> dict | None:
+    def __get_box(self, box_id) -> dict:
         """
         Metodo para obtener la informacion de una caja a partir de su id.
         """
