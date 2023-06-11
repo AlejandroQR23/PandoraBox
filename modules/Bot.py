@@ -12,6 +12,7 @@ class Bot:
         token = os.getenv('TELEGRAM_TOKEN')
         self.bot = telebot.TeleBot(token)
         self.chat_id = None
+        self.password = None
 
     def has_started(self) -> bool:
         return self.chat_id is not None
