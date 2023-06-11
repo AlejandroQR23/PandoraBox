@@ -27,11 +27,11 @@ class Keypad():
         Inicia los pines del teclado, las filas son salidas
         y las columnas entradas.
         """
-        for pin in self.rows:
+        for pin in self.cols:
             GPIO.setup(pin, GPIO.OUT)
             GPIO.output(pin, 1)
 
-        for pin in self.cols:
+        for pin in self.rows:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
     def get_key(self) -> str:
